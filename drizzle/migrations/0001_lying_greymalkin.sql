@@ -1,0 +1,1 @@
+ALTER TABLE "draft_user" ADD COLUMN "firstName" varchar(255);

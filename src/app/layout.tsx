@@ -2,8 +2,11 @@ import "@/styles/globals.css";
 
 import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
+import { NextUIProvider } from "@nextui-org/system";
 
 import { TRPCReactProvider } from "@/trpc/react";
+import { NextUiProvider } from "@/components/providers/NextUiProvider";
+import { RouteProvider } from "@/components/providers/RouteProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -25,7 +28,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`font-sans ${inter.variable}`}>
         <TRPCReactProvider cookies={cookies().toString()}>
-          {children}
+          <NextUiProvider>
+            <RouteProvider>{children}</RouteProvider>
+          </NextUiProvider>
         </TRPCReactProvider>
       </body>
     </html>

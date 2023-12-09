@@ -8,7 +8,9 @@ import DiscordProvider from "next-auth/providers/discord";
 
 import { env } from "@/env";
 import { db } from "@/server/db";
-import { mysqlTable } from "@/server/db/schema";
+import { pgTable } from "@/server/db/schema";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { api } from "@/trpc/server";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -46,12 +48,9 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   },
-  adapter: DrizzleAdapter(db, mysqlTable),
+  adapter: DrizzleAdapter(db, pgTable),
   providers: [
-    DiscordProvider({
-      clientId: env.DISCORD_CLIENT_ID,
-      clientSecret: env.DISCORD_CLIENT_SECRET,
-    }),
+  
     /**
      * ...add more providers here.
      *
@@ -61,6 +60,20 @@ export const authOptions: NextAuthOptions = {
      *
      * @see https://next-auth.js.org/providers/github
      */
+    CredentialsProvider({
+      name:"Credentials",
+      credentials:{
+        email:{label:"Email", type:"text", placeholder:"Enter email"},
+        password:{label:"password", type:"password", placeholder:"Enter password"},
+      },
+      async authorize(credentials, req) {
+        const user = await api.user.loginUser.mutate({email:credentials!.email!, password:credentials!.password!})!
+        if(user) {
+          return user as {id:string} & Omit<typeof user, "id" >
+        }
+        return null
+      }
+    })
   ],
 };
 
