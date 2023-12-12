@@ -1,17 +1,25 @@
 import "@/styles/globals.css";
 
-import { Inter } from "next/font/google";
+import { Inter,Space_Grotesk,Poppins } from "next/font/google";
 import { cookies } from "next/headers";
 import { NextUIProvider } from "@nextui-org/system";
 
 import { TRPCReactProvider } from "@/trpc/react";
 import { NextUiProvider } from "@/components/providers/NextUiProvider";
 import { RouteProvider } from "@/components/providers/RouteProvider";
+import NextAuthSessionProvider from "@/components/providers/NextAuthSessionProvider";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
 });
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
+
+
 
 export const metadata = {
   title: "Create T3 App",
@@ -29,7 +37,11 @@ export default function RootLayout({
       <body className={`font-sans ${inter.variable}`}>
         <TRPCReactProvider cookies={cookies().toString()}>
           <NextUiProvider>
-            <RouteProvider>{children}</RouteProvider>
+            <RouteProvider>
+            <NextAuthSessionProvider>
+              {children}
+              </NextAuthSessionProvider>
+              </RouteProvider>
           </NextUiProvider>
         </TRPCReactProvider>
       </body>

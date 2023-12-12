@@ -29,6 +29,13 @@
       "when": 1701881683211,
       "tag": "0003_mighty_moonstone",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1702285069863,
+      "tag": "0004_bright_cerebro",
+      "breakpoints": true
     }
   ]
 }

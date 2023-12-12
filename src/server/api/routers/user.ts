@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { eq } from "drizzle-orm";
 import { activateToken, user } from "@/server/db/schema";
 import { TRPCError } from "@trpc/server";
@@ -65,6 +65,15 @@ export const userRouter = createTRPCRouter({
       }
       return {
         ...dbUser
+      }
+    }),
+    saveNames:protectedProcedure.input(z.object({
+      firstName:z.string(),
+      lastName:z.string()
+    })).mutation(async({ctx,input}) => {
+      await ctx.db.update(user).set({firstName:input.firstName, lastName:input.lastName}).where(eq(user.email, ctx.session!.user.email!))
+      return {
+        success:true
       }
     })
 

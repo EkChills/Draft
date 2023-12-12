@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm';
-import { serial, text, pgTableCreator,  varchar, boolean, timestamp, primaryKey, integer } from 'drizzle-orm/pg-core';
+import { serial, text, pgTableCreator,  varchar, boolean, timestamp, primaryKey, integer, uuid } from 'drizzle-orm/pg-core';
 import type { AdapterAccount } from '@auth/core/adapters'
 
 
@@ -80,6 +80,13 @@ export const user = pgTable("user", {
   userId:text('userId')
 })
 
+export const document =  pgTable('document', {
+  id:uuid('id').defaultRandom().primaryKey(),
+  title:text('title'),
+  description:text('description'),
+  userId:text('userId')
+})
+
 export const activateTokenRelation = relations(activateToken, ({one}) => ({
   user: one(user, {
     fields:[activateToken.userId],
@@ -88,6 +95,18 @@ export const activateTokenRelation = relations(activateToken, ({one}) => ({
   })
 }))
 
+export const documentRelation = relations(document, ({one}) => ({
+  user: one(user, {
+    fields:[document.userId],
+    references:[user.id],
+    relationName:'documentRelation'
+  })
+}) )
+
 export const userRelation = relations(user, ({one}) => ({
   activateToken:one(activateToken)
+}))
+
+export const userRelation2 = relations(user, ({many}) => ({
+  document:many(document)
 }))

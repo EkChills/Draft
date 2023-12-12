@@ -3,6 +3,7 @@ import {
   getServerSession,
   type DefaultSession,
   type NextAuthOptions,
+  User,
 } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
 
@@ -20,8 +21,11 @@ import { api } from "@/trpc/server";
  */
 declare module "next-auth" {
   interface Session extends DefaultSession {
+    userId:string;
     user: {
       id: string;
+      firstName:string;
+      lastName:string;
       // ...other properties
       // role: UserRole;
     } & DefaultSession["user"];
@@ -40,13 +44,45 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
+    async jwt({ token, account, user, trigger, session }) {
+
+      // if(trigger === 'update'){
+      //   console.log('yes update');
+
+        
+      //   return {...token, ...session.user} 
+      // }
+   
+      // Persist the OAuth access_token to the token right after signin
+      if (account) {
+        token.accessToken = account.access_token
+        token.id = account.userId
+      }
+      if(user) {        
+        return {...token, ...user}
+      }
+      return token
+    },
+    async session({ session, token, user }) {
+      // Send properties to the client, like an access_token from a provider.
+      
+      // session.accessToken = token.accessToken as string
+      // session.userId  = token.id as string
+      // session.role = token.Role as Role
+      // session.user.image = token.image as string
+      // if(token.email) {
+        
+      //   session.user.email = token.email as string
+      // }
+      
+      session.user.firstName = token.firstName as string ?? "" 
+      session.user.lastName = token.lastName as string ?? ""
+      session.userId = token.id as string
+      return session
+    }
+  },
+  session:{
+strategy:'jwt'
   },
   adapter: DrizzleAdapter(db, pgTable),
   providers: [
@@ -66,7 +102,7 @@ export const authOptions: NextAuthOptions = {
         email:{label:"Email", type:"text", placeholder:"Enter email"},
         password:{label:"password", type:"password", placeholder:"Enter password"},
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         const user = await api.user.loginUser.mutate({email:credentials!.email!, password:credentials!.password!})!
         if(user) {
           return user as {id:string} & Omit<typeof user, "id" >

@@ -7,10 +7,12 @@ import { api } from "@/trpc/react";
 import {type SubmitHandler, useForm} from 'react-hook-form'
 import { RegisterSchema, type RegisterSchemaType } from "@/lib/zodSchemas";
 import {zodResolver} from '@hookform/resolvers/zod'
+import { useRouter } from "next/navigation";
 
 export default function RegisterForm() {
     const [isVisible, setIsVisible] = useState<boolean>(false)
     const {mutate,isLoading} = api.user.registerUser.useMutation()
+    const router = useRouter()
     const {handleSubmit, formState:{errors}, register} = useForm<RegisterSchemaType>({resolver:zodResolver(RegisterSchema)})
 
     const toggleVisibility = () => {
@@ -21,6 +23,7 @@ export default function RegisterForm() {
 
    const handleRegister:SubmitHandler<RegisterSchemaType> = async function(data) {
       mutate({email:data.email, password:data.password})
+     router.push('/verify-email') 
     }
   return (
     <form className="mx-auto mt-12 w-full sm:max-w-[26.375rem]" onSubmit={handleSubmit(handleRegister)}>

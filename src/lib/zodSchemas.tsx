@@ -14,3 +14,10 @@ export const signInSchema = z.object({
 })
 
 export type SignInType = z.infer<typeof signInSchema>
+
+export const MoreInfoSchema = z.object({
+    firstName:z.string().min(2, {message:"first name cannot be less than 2 characters"}),
+    LastName:z.string().min(2, {message:"last name cannot be less than 2 characters"}),
+})
+
+export type MoreInfoType = z.infer<typeof MoreInfoSchema>
