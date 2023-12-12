@@ -9,6 +9,7 @@ import { v4 as uuid } from "uuid";
 import {Resend} from 'resend'
 import { env } from "@/env";
 import WelcomeEmail from "@/emails/Welcome";
+import { BaseUrl } from "@/lib/utils";
 
 export const userRouter = createTRPCRouter({
   registerUser: publicProcedure
@@ -42,7 +43,7 @@ export const userRouter = createTRPCRouter({
         from: "onboarding@resend.dev",
         to:input.email,
         subject: `Activate Your draft Account: Confirm Your Email Now! `,
-        react:WelcomeEmail({verificationLink:`http://localhost:3000/activate/${randToken}`}),
+        react:WelcomeEmail({verificationLink:`${BaseUrl}/activate/${randToken}`}),
       });
 
       return {
