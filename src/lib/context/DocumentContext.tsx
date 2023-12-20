@@ -1,7 +1,7 @@
 
 "use client"
 
-import { type Dispatch, type SetStateAction, createContext, useState } from "react";
+import { type Dispatch, type SetStateAction, createContext, useState, useContext } from "react";
 
 type InitialStateType = {
   pageTitle:string;
@@ -26,4 +26,8 @@ export const DocumentContextProvider = ({children}:React.PropsWithChildren) => {
       {children}
     </DocumentContext.Provider>
   )
+}
+
+export const useDocumentContext = () => {
+  return useContext(DocumentContext)
 }

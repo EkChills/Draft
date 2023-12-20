@@ -1,10 +1,25 @@
+import MainNavbar from "@/components/MainNavbar";
 import MaxWidthWrapper from "@/components/MaxwidthWrapper";
 import WelcomeCard from "@/components/WelcomeCard";
+import { getServerAuthSession } from '@/server/auth';
+import { db } from '@/server/db';
+import { user } from '@/server/db/schema';
+import { Navbar } from '@nextui-org/react';
+import { eq } from 'drizzle-orm';
 
-export default function AllDocuments() {
+export default async function AllDocuments() {
+  const session = await getServerAuthSession()
+  console.log(session);
+  
+  const dbUser = await db.select().from(user).where(eq(user.email, session!.user.email!))
   return (
+
+    <>
+            <MainNavbar firstName={dbUser[0]?.firstName ?? ''} lastName={dbUser[0]?.lastName ?? ''} />
+
         <MaxWidthWrapper className='border-l border-2 px-4 pt-4 overflow-x-scroll lg:px-24 lg:pt-12'>
           <WelcomeCard />
         </MaxWidthWrapper>
+    </>
   )
 }

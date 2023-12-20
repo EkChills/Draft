@@ -18,10 +18,14 @@ import {
 import { ChevronDown, MoreHorizontal, PanelLeft, Plus } from "lucide-react";
 import BigNavDropdown from "./BigNavDropdown";
 import AddNoteDropdown from "./AddNoteDropdown";
+import { usePathname } from "next/navigation";
+import { useDocumentContext } from "@/lib/context/DocumentContext";
 // import {AcmeLogo} from "./AcmeLogo.jsx";
 
 export default function MainNavbar({firstName, lastName}:{firstName:string; lastName:string;}) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const {pageTitle} = useDocumentContext() 
+  
   return (
     <Navbar className="" maxWidth="full" isBordered>
       {/* <NavbarContent className="sm:hidden" justify="start">
@@ -34,7 +38,7 @@ export default function MainNavbar({firstName, lastName}:{firstName:string; last
 
           <div className="flex items-center gap-8">
             <PanelLeft className="text-[#212121] hidden lg:block" />
-            <span className="text-base font-bold">All Documents</span>
+            {<span className="text-base font-bold">All Documents</span>}
           </div>
           <div className="flex items-center">
             <AddNoteDropdown />

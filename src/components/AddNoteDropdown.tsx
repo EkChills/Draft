@@ -14,7 +14,7 @@ export default function AddNoteDropdown() {
     <Dropdown placement='bottom-end'>
       <div className="flex gap-2">
             
-              <Button className="hidden lg:block" isDisabled>Beta</Button>
+              {/* <Button className="hidden lg:block" isDisabled>Beta</Button> */}
               <DropdownTrigger>
               <Button className="gap-2 font-semibold hidden lg:flex"  variant="bordered">
                 <Plus />

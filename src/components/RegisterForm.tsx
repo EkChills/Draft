@@ -9,9 +9,41 @@ import { RegisterSchema, type RegisterSchemaType } from "@/lib/zodSchemas";
 import {zodResolver} from '@hookform/resolvers/zod'
 import { useRouter } from "next/navigation";
 
+
+const rat = {
+  whisker:{
+    name:"drop",
+    breed:"nothing"
+  },
+  brand:{
+    name:"prot",
+    breed:"top"
+  }
+}
+
+type Pro = typeof rat
+
+type Rat = {
+  [K in keyof Pro]:{
+    name:string;
+    breed:string;
+  }
+}
+
+const bo:Rat = {
+  brand:{
+    breed:'dock',
+    name:"dd"
+  },
+  whisker:{
+    breed:"form",
+    name:"trunk"
+  }
+}
+
 export default function RegisterForm() {
     const [isVisible, setIsVisible] = useState<boolean>(false)
-    const {mutate,isLoading} = api.user.registerUser.useMutation()
+    const {mutate,isLoading, isSuccess} = api.user.registerUser.useMutation()
     const router = useRouter()
     const {handleSubmit, formState:{errors}, register} = useForm<RegisterSchemaType>({resolver:zodResolver(RegisterSchema)})
 
@@ -23,7 +55,10 @@ export default function RegisterForm() {
 
    const handleRegister:SubmitHandler<RegisterSchemaType> = async function(data) {
       mutate({email:data.email, password:data.password})
-     router.push('/verify-email') 
+      if(isSuccess) {
+        router.push('/verify-email') 
+
+      }
     }
   return (
     <form className="mx-auto mt-12 w-full sm:max-w-[26.375rem]" onSubmit={handleSubmit(handleRegister)}>
