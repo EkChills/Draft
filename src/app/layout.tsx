@@ -8,6 +8,8 @@ import { TRPCReactProvider } from "@/trpc/react";
 import { NextUiProvider } from "@/components/providers/NextUiProvider";
 import { RouteProvider } from "@/components/providers/RouteProvider";
 import NextAuthSessionProvider from "@/components/providers/NextAuthSessionProvider";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -44,6 +46,7 @@ export default function RootLayout({
               </RouteProvider>
           </NextUiProvider>
         </TRPCReactProvider>
+        <ToastContainer />
       </body>
     </html>
   );

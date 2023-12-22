@@ -3,10 +3,14 @@ import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@
 import { ChevronDown, FilePlus2, Plus } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React from 'react'
+import LoadingDisplay from './LoadingDisplay'
 
 export default function AddNoteDropdown() {
-  const {mutate:addDocument, isSuccess, data} = api.document.addNewDocument.useMutation()
+  const {mutate:addDocument, isSuccess, data,isLoading} = api.document.addNewDocument.useMutation()
   const router = useRouter()
+  if(isLoading) {
+    return <LoadingDisplay loadingMessage='Creating document' />
+  }
   if(isSuccess) {
     router.push(`/all-documents/document/${data.documentId}`)
   }
