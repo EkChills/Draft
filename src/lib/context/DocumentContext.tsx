@@ -20,6 +20,7 @@ export const DocumentContext = createContext(initialState)
 
 export const DocumentContextProvider = ({children}:React.PropsWithChildren) => {
   const [pageTitle, setPageTitle] = useState<string>('')
+  
 
   return (
     <DocumentContext.Provider value={{ pageTitle, setPageTitle }}>

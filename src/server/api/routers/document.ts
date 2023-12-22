@@ -1,6 +1,8 @@
 import { document } from "@/server/db/schema";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { redirect } from "next/navigation";
+import { z } from "zod";
+import { eq } from "drizzle-orm";
 
 export const documentRouter = createTRPCRouter({
   addNewDocument:protectedProcedure.mutation(async({ctx}) => {
@@ -15,6 +17,20 @@ export const documentRouter = createTRPCRouter({
     return {
       success:true,
       documentId:createdDocument[0]?.documentId
+    }
+  }),
+  updateDocument:protectedProcedure.input(z.object({
+    documentId:z.string(),
+    documentTitle:z.string(),
+    description:z.string(),
+  })).mutation(async({ctx,input}) => {
+    await ctx.db.update(document).set({
+      title:input.documentTitle,
+      description:input.description,
+    }).where(eq(document.id, input.documentId))
+
+    return {
+      success:true
     }
   })
 })

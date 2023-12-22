@@ -1,16 +1,22 @@
 "use client"
 
 import { useDocumentContext } from '@/lib/context/DocumentContext'
+import { api } from '@/trpc/react'
 import { Input } from '@nextui-org/react'
 import React, { useEffect } from 'react'
 import {useDebounce, useLocalStorage} from 'usehooks-ts'
 
-export default function SingleDocument({documentId}:{documentId:string}) {
+export default function SingleDocumentInput({documentId}:{documentId:string}) {
   const [pageName, setPageName] = useLocalStorage(`document/${documentId}`, '')
-  const {setPageTitle} = useDocumentContext()
+  const debounceValue = useDebounce<string>(pageName, 500)
+  const {setPageTitle, pageTitle} = useDocumentContext()
+  const {mutate, isLoading, isSuccess} = api.document.updateDocument.useMutation()
   useEffect(() => {
     setPageTitle(pageName)
-  },[pageName])
+    
+  },[debounceValue])
+
+  
   // const debounceValue = useDebounce(pageTitle, 400)
   return (
     <div>
