@@ -10,7 +10,7 @@ type DocumentCardProps = {
 
 const DocumentCard = ({title, description, href}:DocumentCardProps) => {
   return (
-    <Card className="max-w-[400px] p-4 min-w-[400px]">
+    <Card className="md:max-w-[400px] p-4 w-full md:min-w-[400px]">
       <CardBody className="flex flex-col  gap-12">
         <h3 className="text-lg font-bold tracking-tight">{title}</h3>
         <p className="text-sm text-gray-500">

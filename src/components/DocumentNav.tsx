@@ -70,7 +70,7 @@ export default function DocumentNav({firstName, lastName}:{firstName:string; las
       </DropdownMenu>
             </Dropdown>
             <AddNoteDropdown />
-            <Button isIconOnly variant="ghost" className="ml-4" aria-label="more">
+            <Button isIconOnly variant="ghost" className="ml-4 hidden sm:block" aria-label="more">
               <MoreHorizontal />
               </Button>
           </div>
