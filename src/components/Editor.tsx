@@ -33,11 +33,13 @@ export default function Editor({docId}:EditorProps) {
     const textContent = doc.body.textContent;
     mutate({documentId:docId, documentTitle:pageTitle, description:textContent!.substring(0, 200)})
     console.log(textContent?.substring(0,200));
-    toast.success("Changes Saved", {
-      position:"bottom-right",
-      hideProgressBar:true,
-      icon:<BadgeCheck className='h-4 w-4' />
-    })
+    if(isSuccess) {
+      toast.success("Changes Saved", {
+        position:"bottom-right",
+        hideProgressBar:true,
+        icon:<BadgeCheck className='h-4 w-4' />
+      })
+    }
     // mutate
   }
 
