@@ -21,19 +21,25 @@ type EditorProps = {
 
 
 export default function Editor({docId}:EditorProps) {
-  const [model, setModel] = useState(() => {
-    return localStorage.getItem(`savedHtml/${docId}`) ?? ""
-  })
   const {pageTitle} = useDocumentContext()
+  const [model, setModel] = useState(() => {
+    console.log(docId),'docd';
+    
+    return localStorage.getItem(`savedHtml-${docId}`)!
+  })
+
+  console.log(model,'model');
+  
   const {mutate, isLoading, isSuccess} = api.document.updateDocument.useMutation()
 
-  function handleSave () {
+  async function handleSave () {
     const parser = new DOMParser()
     const doc = parser.parseFromString(model, 'text/html');
     const textContent = doc.body.textContent;
     mutate({documentId:docId, documentTitle:pageTitle, description:textContent!.substring(0, 200)})
     console.log(textContent?.substring(0,200));
-    if(isSuccess) {
+ 
+    if(!isLoading && isSuccess) {
       toast.success("Changes Saved", {
         position:"bottom-right",
         hideProgressBar:true,
@@ -57,7 +63,7 @@ export default function Editor({docId}:EditorProps) {
             heightMin: 300,
             events:{
               "save.before": function(html:string) {
-                localStorage.setItem(`savedHtml/${docId}`,html)
+                localStorage.setItem(`savedHtml-${docId}`,html)
               }
             }
           }}  />

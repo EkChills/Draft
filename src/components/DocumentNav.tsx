@@ -23,7 +23,7 @@ import { useDocumentContext } from "@/lib/context/DocumentContext";
 import generatePDF from "@/lib/generatePdf";
 // import {AcmeLogo} from "./AcmeLogo.jsx";
 
-export default function DocumentNav({firstName, lastName}:{firstName:string; lastName:string;}) {
+export default function DocumentNav({firstName, lastName, documentId}:{firstName:string; lastName:string; documentId:string;}) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const elRef = useRef<HTMLElement>(null)
   const {pageTitle} = useDocumentContext()
@@ -32,7 +32,7 @@ export default function DocumentNav({firstName, lastName}:{firstName:string; las
   
   async function handleSave () {
     const finalHtmlString = `  <h1 style="color: black; text-align: left; font-size:36px; font-weight:700; margin-bottom:10px; ">${pageTitle}</h1>`
-    const storedHtml:string = finalHtmlString + localStorage.getItem('savedHtml')! + `<p style="margin-top:5px;">  </p>` 
+    const storedHtml:string = finalHtmlString + localStorage.getItem(`savedHtml-${pageTitle}`)! + `<p style="margin-top:5px;">  </p>` 
     generatePDF(storedHtml)
 
   }

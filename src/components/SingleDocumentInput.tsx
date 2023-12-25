@@ -7,14 +7,14 @@ import React, { useEffect } from 'react'
 import {useDebounce, useLocalStorage} from 'usehooks-ts'
 
 export default function SingleDocumentInput({documentId}:{documentId:string}) {
-  const [pageName, setPageName] = useLocalStorage(`document/${documentId}`, '')
+  const [pageName, setPageName] = useLocalStorage(`document-${documentId}`, '')
   const debounceValue = useDebounce<string>(pageName, 500)
   const {setPageTitle, pageTitle} = useDocumentContext()
   const {mutate, isLoading, isSuccess} = api.document.updateDocument.useMutation()
   useEffect(() => {
     setPageTitle(pageName)
     
-  },[debounceValue])
+  },[pageName])
 
   
   // const debounceValue = useDebounce(pageTitle, 400)
