@@ -42,6 +42,7 @@ export default async function Document({
       <DocumentNav
         firstName={dbUser[0]?.firstName ?? ""}
         lastName={dbUser[0]?.lastName ?? ""}
+        documentId={params.documentId}
       />
 
       <MaxWidthWrapper className="overflow-x-scroll border-2 border-l px-4 pt-4 lg:px-24 lg:pt-12">
