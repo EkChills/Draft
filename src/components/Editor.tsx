@@ -2,7 +2,7 @@
 
 import MaxWidthWrapper from '@/components/MaxwidthWrapper'
 import WelcomeCard from '@/components/WelcomeCard'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import FroalaEditor from 'react-froala-wysiwyg'
 import 'froala-editor/css/froala_style.min.css';
 import 'froala-editor/js/plugins.pkgd.min.js';
@@ -30,24 +30,28 @@ export default function Editor({docId}:EditorProps) {
 
   console.log(model,'model');
   
-  const {mutate, isLoading, isSuccess} = api.document.updateDocument.useMutation()
+  const {mutate, isLoading, isSuccess,data} = api.document.updateDocument.useMutation()
+  console.log(data);
+  
 
   async function handleSave () {
     const parser = new DOMParser()
     const doc = parser.parseFromString(model, 'text/html');
     const textContent = doc.body.textContent;
     mutate({documentId:docId, documentTitle:pageTitle, description:textContent!.substring(0, 200)})
-    console.log(textContent?.substring(0,200));
- 
-    if(!isLoading && isSuccess) {
+    // mutate by damned
+  }
+
+  useEffect(() => {
+    if(data?.success) {
       toast.success("Changes Saved", {
         position:"bottom-right",
         hideProgressBar:true,
         icon:<BadgeCheck className='h-4 w-4' />
       })
-    }
-    // mutate
-  }
+    }  
+  },[data?.success])
+
 
   return (
     <div id='editor' className='mt-12'>

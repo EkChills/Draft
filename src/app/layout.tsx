@@ -44,9 +44,9 @@ export default function RootLayout({
               {children}
               </NextAuthSessionProvider>
               </RouteProvider>
+        <ToastContainer />
           </NextUiProvider>
         </TRPCReactProvider>
-        <ToastContainer />
       </body>
     </html>
   );
