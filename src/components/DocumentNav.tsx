@@ -30,9 +30,9 @@ export default function DocumentNav({firstName, lastName, documentId}:{firstName
 
 
   
-  async function handleSave () {
+  async function handleExport () {
     const finalHtmlString = `  <h1 style="color: black; text-align: left; font-size:36px; font-weight:700; margin-bottom:10px; ">${pageTitle}</h1>`
-    const storedHtml:string = finalHtmlString + localStorage.getItem(`savedHtml-${pageTitle}`)! + `<p style="margin-top:5px;">  </p>` 
+    const storedHtml:string = finalHtmlString + localStorage.getItem(`savedHtml-${documentId}`)! + `<p style="margin-top:5px;">  </p>` 
     generatePDF(storedHtml)
 
   }
@@ -63,7 +63,7 @@ export default function DocumentNav({firstName, lastName, documentId}:{firstName
                 </Button>
               </DropdownTrigger>
               <DropdownMenu variant="faded" className="font-bold" aria-label="Static Actions">
-        <DropdownItem key="new" onClick={handleSave}  endContent={<FileText className="font-bold text-sm text-[#262828]" />}>PDF</DropdownItem>
+        <DropdownItem key="new" onClick={handleExport}  endContent={<FileText className="font-bold text-sm text-[#262828]" />}>PDF</DropdownItem>
         <DropdownItem key="copy" endContent={<Image className="font-bold text-sm text-[#262828]" />}>Image</DropdownItem>
         <DropdownItem key="edit" endContent={<BookText className="font-bold text-sm text-[#262828]" />}>MarkDown</DropdownItem>
 

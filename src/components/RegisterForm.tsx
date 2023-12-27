@@ -57,7 +57,6 @@ export default function RegisterForm() {
       mutate({email:data.email, password:data.password})
       if(isSuccess) {
         router.push('/verify-email') 
-
       }
     }
   return (
