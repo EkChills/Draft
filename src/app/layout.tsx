@@ -10,7 +10,6 @@ import { RouteProvider } from "@/components/providers/RouteProvider";
 import NextAuthSessionProvider from "@/components/providers/NextAuthSessionProvider";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { ReactToastifyContainer } from "@/components/providers/ReactToastifyContainer";
 
 const inter = Inter({
   subsets: ["latin"],
