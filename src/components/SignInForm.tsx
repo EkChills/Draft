@@ -28,7 +28,7 @@ export default function SignInForm() {
         setIsLoading(true)
         const callBack = await signIn("credentials", {email:data.email, password:data.password, redirect:false})
         if(callBack?.ok) {
-          router.push('/all-documents')
+          router.push('/more-info')
         } 
       } catch (error) {
         console.log(error);

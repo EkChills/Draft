@@ -21,9 +21,10 @@ import AddNoteDropdown from "./AddNoteDropdown";
 import { usePathname } from "next/navigation";
 import { useDocumentContext } from "@/lib/context/DocumentContext";
 import generatePDF from "@/lib/generatePdf";
+import NavbarMenuDisplay from "./NavbarMenuDisplay";
 // import {AcmeLogo} from "./AcmeLogo.jsx";
 
-export default function DocumentNav({firstName, lastName, documentId}:{firstName:string; lastName:string; documentId:string;}) {
+export default function DocumentNav({firstName, lastName, documentId, userEmail}:{firstName:string; lastName:string; documentId:string; userEmail:string;}) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const elRef = useRef<HTMLElement>(null)
   const {pageTitle} = useDocumentContext()
@@ -46,10 +47,10 @@ export default function DocumentNav({firstName, lastName, documentId}:{firstName
         <NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} />
       </NavbarContent> */}
       <NavbarContent as="div" justify="start">
-        <BigNavDropdown firstName={firstName} lastName={lastName} />
+        <BigNavDropdown userEmail={userEmail} firstName={firstName} lastName={lastName} />
         <div className="flex w-full items-center justify-between px-4">
-        <NavbarMenuToggle className="lg:hidden" aria-label={isMenuOpen ? "Close menu" : "Open menu"} />
-
+          <NavbarMenuToggle className="lg:hidden w-6 h-6" aria-label={isMenuOpen ? "Close menu" : "Open menu"} />
+          <NavbarMenuDisplay userEmail={userEmail} firstName={firstName} lastName={lastName} />
           <div className="flex items-center gap-8">
             <PanelLeft className="text-[#212121] hidden lg:block" />
             {<span className="text-base font-bold">{pageTitle.trim().length > 1 ? pageTitle : "Untitled Document"}</span>}
@@ -57,8 +58,8 @@ export default function DocumentNav({firstName, lastName, documentId}:{firstName
           <div className="flex items-center">
             <Dropdown backdrop="blur">
               <DropdownTrigger>
-                <Button variant="solid" className="bg-[#367EE7] text-white font-bold mr-2">
-                  <span ref={elRef}>Export as</span>
+                <Button variant="solid" className="bg-[#367EE7] text-white font-bold mr-2 ">
+                  <span className="hidden sm:block" ref={elRef}>Export as</span>
                   <Forward />
                 </Button>
               </DropdownTrigger>
@@ -76,6 +77,8 @@ export default function DocumentNav({firstName, lastName, documentId}:{firstName
           </div>
         </div>
       </NavbarContent>
+
+
     </Navbar>
   );
 }

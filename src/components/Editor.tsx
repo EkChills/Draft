@@ -30,7 +30,7 @@ export default function Editor({docId}:EditorProps) {
 
   console.log(model,'model');
   
-  const {mutate, isLoading, isSuccess,data} = api.document.updateDocument.useMutation()
+  const {mutate, isLoading,data} = api.document.updateDocument.useMutation()
   console.log(data);
   
 

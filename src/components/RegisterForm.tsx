@@ -1,7 +1,7 @@
 "use client"
 
 import { Button, Input } from "@nextui-org/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {Eye, EyeOff} from 'lucide-react'
 import { api } from "@/trpc/react";
 import {type SubmitHandler, useForm} from 'react-hook-form'
@@ -43,7 +43,7 @@ const bo:Rat = {
 
 export default function RegisterForm() {
     const [isVisible, setIsVisible] = useState<boolean>(false)
-    const {mutate,isLoading, isSuccess} = api.user.registerUser.useMutation()
+    const {mutate,isLoading, isSuccess, data} = api.user.registerUser.useMutation()
     const router = useRouter()
     const {handleSubmit, formState:{errors}, register} = useForm<RegisterSchemaType>({resolver:zodResolver(RegisterSchema)})
 
@@ -55,10 +55,14 @@ export default function RegisterForm() {
 
    const handleRegister:SubmitHandler<RegisterSchemaType> = async function(data) {
       mutate({email:data.email, password:data.password})
+     
+    }
+
+    useEffect(() => {
       if(isSuccess) {
         router.push('/verify-email') 
       }
-    }
+    },[data?.success])
   return (
     <form className="mx-auto mt-12 w-full sm:max-w-[26.375rem]" onSubmit={handleSubmit(handleRegister)}>
       <Input type="email" {...register("email")} className="w-full" label="Email" errorMessage={errors.email?.message} isInvalid={errors.email ? true : false} />
