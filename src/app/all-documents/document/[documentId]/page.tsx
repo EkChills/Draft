@@ -24,7 +24,7 @@ export default async function Document({
   params: { documentId: string };
 }) {
   const session = await getServerAuthSession();
-  console.log(session);
+  console.log(session,'this session');
 
   const dbUser = await db
     .select()
@@ -43,6 +43,7 @@ export default async function Document({
         firstName={dbUser[0]?.firstName ?? ""}
         lastName={dbUser[0]?.lastName ?? ""}
         documentId={params.documentId}
+        userEmail={'megafat'}
       />
 
       <MaxWidthWrapper className="overflow-x-scroll border-2 border-l px-4 pt-4 lg:px-24 lg:pt-12">
