@@ -83,7 +83,8 @@ export const authOptions: NextAuthOptions = {
   },
   session:{
 strategy:'jwt',
-maxAge:60 * 60 * 24
+maxAge:60 * 60 * 24,
+updateAge: 24 * 60 * 60,
   },
   adapter: DrizzleAdapter(db, pgTable),
   providers: [
