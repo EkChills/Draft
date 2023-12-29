@@ -1,5 +1,7 @@
 import { NavbarMenuItem, NavbarMenu, Avatar, Button, } from "@nextui-org/react";
 import React from "react";
+import {signOut} from 'next-auth/react'
+import { useRouter } from "next/navigation";
 
 interface NavbarMenuDisplayProps {
   firstName:string;
@@ -7,6 +9,11 @@ interface NavbarMenuDisplayProps {
   userEmail?:string;
 }
 export default function NavbarMenuDisplay({firstName, lastName, userEmail}:NavbarMenuDisplayProps) {
+  const router = useRouter()
+  const signOutHandler = async() => {
+    await signOut()
+    router.push('/register')
+  }
   return (
     <NavbarMenu>
       <NavbarMenuItem>
@@ -28,7 +35,7 @@ export default function NavbarMenuDisplay({firstName, lastName, userEmail}:Navba
 
       </NavbarMenuItem>
       <NavbarMenuItem>
-        <Button  className="w-full" variant="ghost">Log out</Button>
+        <Button  className="w-full" onClick={signOutHandler} variant="ghost">Log out</Button>
       </NavbarMenuItem>
     </NavbarMenu>
   );

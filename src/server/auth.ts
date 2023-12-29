@@ -82,7 +82,8 @@ export const authOptions: NextAuthOptions = {
     }
   },
   session:{
-strategy:'jwt'
+strategy:'jwt',
+maxAge:60 * 60 * 24
   },
   adapter: DrizzleAdapter(db, pgTable),
   providers: [
@@ -111,6 +112,9 @@ strategy:'jwt'
       }
     })
   ],
+  pages:{
+    signIn:'/signin'
+  }
 };
 
 /**
