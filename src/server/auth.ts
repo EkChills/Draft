@@ -87,6 +87,7 @@ maxAge:60 * 60 * 24,
 updateAge: 24 * 60 * 60,
   },
   adapter: DrizzleAdapter(db, pgTable),
+  
   providers: [
   
     /**
@@ -115,7 +116,8 @@ updateAge: 24 * 60 * 60,
   ],
   pages:{
     signIn:'/signin'
-  }
+  },
+  
 };
 
 /**
