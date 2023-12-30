@@ -37,7 +37,7 @@ export default function Editor({docId}:EditorProps) {
   async function handleSave () {
     const parser = new DOMParser()
     const doc = parser.parseFromString(model, 'text/html');
-    const textContent = doc.body.textContent;
+    const textContent = doc.body.textContent?.replaceAll('Powered by Froala Editor','');
     mutate({documentId:docId, documentTitle:pageTitle, description:textContent!.substring(0, 200)})
     // mutate by damned
   }

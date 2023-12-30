@@ -5,7 +5,9 @@ import WelcomeCard from './WelcomeCard'
 import { getServerAuthSession } from '@/server/auth'
 import { eq } from 'drizzle-orm'
 import { document } from '@/server/db/schema'
+import {cache} from 'react'
 
+export const revalidaste = 3600 // revalidate the data at most every hour
 export default async function Documents() {
   const session = await getServerAuthSession()
     const allDocs = await db.query.document.findMany({
