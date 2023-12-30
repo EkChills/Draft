@@ -2,6 +2,7 @@ import { NavbarMenuItem, NavbarMenu, Avatar, Button, } from "@nextui-org/react";
 import React from "react";
 import {signOut} from 'next-auth/react'
 import { useRouter } from "next/navigation";
+import TabsDisplay from "./TabsDisplay";
 
 interface NavbarMenuDisplayProps {
   firstName:string;
@@ -16,6 +17,7 @@ export default function NavbarMenuDisplay({firstName, lastName, userEmail}:Navba
   }
   return (
     <NavbarMenu>
+        <TabsDisplay />
       <NavbarMenuItem>
             <div className="flex items-center gap-4">
                 <Avatar
@@ -34,7 +36,7 @@ export default function NavbarMenuDisplay({firstName, lastName, userEmail}:Navba
               </div>
 
       </NavbarMenuItem>
-      <NavbarMenuItem>
+      <NavbarMenuItem className="mt-2">
         <Button  className="w-full" onClick={signOutHandler} variant="ghost">Log out</Button>
       </NavbarMenuItem>
     </NavbarMenu>
