@@ -5,13 +5,19 @@ import { type Dispatch, type SetStateAction, createContext, useState, useContext
 
 type InitialStateType = {
   pageTitle:string;
-  setPageTitle:Dispatch<SetStateAction<string>>
+  setPageTitle:Dispatch<SetStateAction<string>>;
+  customerId?:string;
+  setCustomerId:Dispatch<SetStateAction<string>>
 }
 
 
 const initialState:InitialStateType = {
   pageTitle:'',
   setPageTitle:() => {
+    return
+  },
+  customerId:'',
+  setCustomerId:() => {
     return
   }
 }
@@ -20,10 +26,13 @@ export const DocumentContext = createContext(initialState)
 
 export const DocumentContextProvider = ({children}:React.PropsWithChildren) => {
   const [pageTitle, setPageTitle] = useState<string>('')
+  const [customerId, setCustomerId] = useState<string>('')
+  
+
   
 
   return (
-    <DocumentContext.Provider value={{ pageTitle, setPageTitle }}>
+    <DocumentContext.Provider value={{ pageTitle, setPageTitle, customerId, setCustomerId }}>
       {children}
     </DocumentContext.Provider>
   )

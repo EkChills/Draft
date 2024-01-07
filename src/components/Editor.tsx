@@ -15,30 +15,44 @@ import { useDocumentContext } from '@/lib/context/DocumentContext'
 import { api } from '@/trpc/react'
 import { toast } from 'react-toastify'
 import { BadgeCheck } from 'lucide-react'
+import PaymentModalAlert from './PaymentModalAlert'
 type EditorProps = {
   docId:string;
+  awaitedSub:{status:boolean; data:{
+    subscriptions:Array<{status:string}>
+  } }
 }
 
 
-export default function Editor({docId}:EditorProps) {
+export default function Editor({docId, awaitedSub}:EditorProps) {
+  console.log('awaited', awaitedSub);
+  
   const {pageTitle} = useDocumentContext()
+  const {data:htmlText} = api.document.getHtmlText.useQuery({documentId:docId})
+  const [showpaymentModal, setShowPaymentModal] = useState<boolean>(false)
+  console.log('htmlText', htmlText);
+  
   const [model, setModel] = useState(() => {
     console.log(docId),'docd';
+    const saVedHtmlString = localStorage.getItem(`savedHtml-${docId}`)
+    console.log('savvd', saVedHtmlString);
     
-    return localStorage.getItem(`savedHtml-${docId}`)!
+    if(saVedHtmlString !== '' || !null) {
+      return localStorage.getItem(`savedHtml-${docId}`)
+      
+    }
+    return htmlText?.success ? htmlText.htmlText : 'err'
   })
 
-  console.log(model,'model');
   
   const {mutate, isLoading,data} = api.document.updateDocument.useMutation()
-  console.log(data);
   
 
   async function handleSave () {
     const parser = new DOMParser()
-    const doc = parser.parseFromString(model, 'text/html');
+    const doc = parser.parseFromString(model!, 'text/html');
     const textContent = doc.body.textContent?.replaceAll('Powered by Froala Editor','');
-    mutate({documentId:docId, documentTitle:pageTitle, description:textContent!.substring(0, 200)})
+    mutate({documentId:docId, documentTitle:pageTitle, description:textContent!.substring(0, 200),html:model!})
     // mutate by damned
   }
 
@@ -54,6 +68,7 @@ export default function Editor({docId}:EditorProps) {
 
 
   return (
+    <>
     <div id='editor' className='mt-12'>
           <FroalaEditor  tag='textarea' model={model}
           onModelChange={(e:string) => {
@@ -65,9 +80,16 @@ export default function Editor({docId}:EditorProps) {
             fontSizeSelection:true,
             // documentReady: true,
             heightMin: 300,
+            charCounterMax: awaitedSub.data.subscriptions.length > 0 ? awaitedSub?.data?.subscriptions[0]!.status === 'active' ? 1000 : 50 : 50,
+
             events:{
               "save.before": function(html:string) {
                 localStorage.setItem(`savedHtml-${docId}`,html)
+              },
+              'charCounter.exceeded': function () {
+                // Do something here.
+                // this is the editor instance.
+                setShowPaymentModal(true)
               }
             }
           }}  />
@@ -77,5 +99,7 @@ export default function Editor({docId}:EditorProps) {
             </Button>
           </div>
     </div>
+    <PaymentModalAlert isOpenPayment={showpaymentModal} setIsOpenPayment={setShowPaymentModal} />
+    </>
   )
 }

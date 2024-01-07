@@ -1,10 +1,11 @@
 "use client"
 
+import { useDocumentContext } from "@/lib/context/DocumentContext";
 import { MoreInfoSchema, type MoreInfoType } from "@/lib/zodSchemas";
 import { api } from "@/trpc/react";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Input } from "@nextui-org/react";
-import { Session } from "next-auth";
+import { type Session } from "next-auth";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -12,9 +13,10 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 
 export default function MoreInfoForm({session}:{session:Session}) {
     const [isVisible, setIsVisible] = useState<boolean>(false)
+    const {customerId, setCustomerId} = useDocumentContext()
     // const {mutate,isLoading} = api.user.registerUser.useMutation()
     const {handleSubmit, formState:{errors}, register} = useForm<MoreInfoType>({resolver:zodResolver(MoreInfoSchema)})
-    const {data, isLoading:isMutating, mutate, isSuccess} = api.user.saveNames.useMutation()
+    const {data:submitData, isLoading:isMutating, mutate, isSuccess} = api.user.saveNames.useMutation()
     const router = useRouter()
     const {update} = useSession()
     // console.log(data?.user);
@@ -30,6 +32,7 @@ export default function MoreInfoForm({session}:{session:Session}) {
       try {
         mutate({firstName:data.firstName, lastName:data.LastName})
         if(isSuccess) {
+          setCustomerId(submitData.customerId)
           router.push('/all-documents')
           await update({...session, firstName:data.firstName, lastName:data.LastName, user:{
             ...session.user,
@@ -56,7 +59,6 @@ export default function MoreInfoForm({session}:{session:Session}) {
         isInvalid={errors.LastName ? true : false}
         errorMessage={errors.LastName?.message}
         {...register("LastName")}
-        
       />
       <Button type="submit" isLoading={isMutating} color="primary" size="lg" fullWidth className="mt-2">Continue</Button>
     </form>

@@ -14,9 +14,9 @@ export default async function page() {
   const dbUser = await db.query.user.findFirst({
     where:eq(user.email, session!.user.email!)
   })
-  if(dbUser?.firstName) {
-    redirect('/all-documents')
-  }
+  // if(dbUser?.firstName) {
+  //   redirect('/all-documents')
+  // }
   return (
     <div className="flex flex-col">
       <h3 className="mx-auto mt-24 text-3xl font-bold">Enter your name</h3>

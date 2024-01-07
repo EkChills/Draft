@@ -59,6 +59,15 @@ export const user = pgTable("user", {
     .references(() => user.id, { onDelete: "cascade" }),
   expires: timestamp("expires", { mode: "date" }).notNull(),
  })
+
+ export const customerCode = pgTable("customerCode", {
+    id:uuid('id').defaultRandom().primaryKey(),
+    customerCode:text('code'),
+    createdAt:timestamp('createdAt').defaultNow(),
+    userId:text("userId")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }), 
+ })   
  
  export const verificationTokens = pgTable(
   "verificationToken",
@@ -84,7 +93,8 @@ export const document =  pgTable('document', {
   id:uuid('id').defaultRandom().primaryKey(),
   title:text('title'),
   description:text('description'),
-  userId:text('userId')
+  userId:text('userId'),
+  html:text('html')
 })
 
 export const activateTokenRelation = relations(activateToken, ({one}) => ({
@@ -109,4 +119,8 @@ export const userRelation = relations(user, ({one}) => ({
 
 export const userRelation2 = relations(user, ({many}) => ({
   document:many(document)
+}))
+
+export const customerCodeRelation = relations(customerCode, ({one}) => ({
+  code:one(customerCode)
 }))
