@@ -17,7 +17,7 @@ import { cn } from "@/lib/utils"
 
 
 
-export function PriceCards() {
+export function PriceCards({amount}:{amount:number}) {
   const {customerId} = useDocumentContext()
   const {mutate, data:subscriptionRes, isLoading:isSuubscribing} = api.user.subscribeToPlan.useMutation()
   async function handleSignUp() {
@@ -31,6 +31,15 @@ export function PriceCards() {
      window.location.assign(subscriptionRes.success_url!) 
     }
   },[subscriptionRes?.success])
+
+  const formatter = new Intl.NumberFormat('en-NG', {
+    style: 'currency',
+    currency: 'NGN'  ,
+    minimumFractionDigits: 0 
+  });
+  
+  const naira = formatter.format(amount/100);
+  
 
   return (
     <main className="w-full py-12 md:py-24 lg:py-32">
@@ -68,7 +77,7 @@ export function PriceCards() {
                   <li>Premium templates</li>
                   <li>Priority support</li>
                 </ul>
-                <p className="font-bold text-2xl">{}</p>
+                <p className="font-bold text-2xl">{naira}</p>
               </div>
             </CardContent>
             <CardFooter>
