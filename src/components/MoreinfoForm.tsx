@@ -8,7 +8,7 @@ import { Button, Input } from "@nextui-org/react";
 import { type Session } from "next-auth";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, type SubmitHandler } from 'react-hook-form';
 
 export default function MoreInfoForm({session}:{session:Session}) {
@@ -33,7 +33,6 @@ export default function MoreInfoForm({session}:{session:Session}) {
         mutate({firstName:data.firstName, lastName:data.LastName})
         if(isSuccess) {
           setCustomerId(submitData.customerId)
-          router.push('/all-documents')
           await update({...session, firstName:data.firstName, lastName:data.LastName, user:{
             ...session.user,
             firstName:data.firstName,
@@ -48,6 +47,12 @@ export default function MoreInfoForm({session}:{session:Session}) {
         console.log(error);
       } 
     }
+
+    useEffect(() => {
+      if(isSuccess) {
+        router.push('/all-documents')
+      }
+    }, [isSuccess])
   return (
     <form className="mx-auto mt-12 w-full sm:max-w-[26.375rem]" onSubmit={handleSubmit(handleLogin)}>
       <Input type="text" {...register("firstName")} className="w-full" label="First Name" errorMessage={errors.firstName?.message} isInvalid={errors.firstName ? true : false} />
