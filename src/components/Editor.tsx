@@ -20,14 +20,14 @@ type EditorProps = {
   docId:string;
   awaitedSub:{status:boolean; data:{
     subscriptions:Array<{status:string}>
-  } }
+  } },
+  htmlString:string | null;
+  documentTitle:string | null
 }
 
 
-export default function Editor({docId, awaitedSub}:EditorProps) {
-  console.log('awaited', awaitedSub);
-  
-  const {pageTitle} = useDocumentContext()
+export default function Editor({docId, awaitedSub, htmlString, documentTitle}:EditorProps) {  
+  const {pageTitle, setPageTitle} = useDocumentContext()
   const {data:htmlText} = api.document.getHtmlText.useQuery({documentId:docId})
   const [showpaymentModal, setShowPaymentModal] = useState<boolean>(false)
   console.log('htmlText', htmlText);
@@ -36,6 +36,10 @@ export default function Editor({docId, awaitedSub}:EditorProps) {
     console.log(docId),'docd';
     const saVedHtmlString = localStorage.getItem(`savedHtml-${docId}`)
     console.log('savvd', saVedHtmlString);
+
+    if(htmlString){
+      return htmlString
+    }
     
     if(saVedHtmlString !== '' || !null) {
       return localStorage.getItem(`savedHtml-${docId}`)

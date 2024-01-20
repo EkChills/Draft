@@ -1,33 +1,46 @@
 "use client";
 
-import React, { useRef } from "react";
-import {
-  Navbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-  Link,
-  DropdownItem,
-  DropdownTrigger,
-  Dropdown,
-  DropdownMenu,
-  Avatar,
-  Button,
-  NavbarMenuToggle,
-} from "@nextui-org/react";
-import { BookText, ChevronDown, FileText, Forward, Image, MoreHorizontal, PanelLeft, Plus } from "lucide-react";
-import BigNavDropdown from "./BigNavDropdown";
-import AddNoteDropdown from "./AddNoteDropdown";
-import { usePathname } from "next/navigation";
 import { useDocumentContext } from "@/lib/context/DocumentContext";
 import generatePDF from "@/lib/generatePdf";
+import {
+  Button,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+  Navbar,
+  NavbarContent,
+  NavbarMenuToggle
+} from "@nextui-org/react";
+import { BookText, FileText, Forward, Image, MoreHorizontal, PanelLeft } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
+import AddNoteDropdown from "./AddNoteDropdown";
+import BigNavDropdown from "./BigNavDropdown";
 import NavbarMenuDisplay from "./NavbarMenuDisplay";
+import ShareDropdown from "./ShareDropdown";
 // import {AcmeLogo} from "./AcmeLogo.jsx";
 
-export default function DocumentNav({firstName, lastName, documentId, userEmail}:{firstName:string; lastName:string; documentId:string; userEmail:string;}) {
+export default function DocumentNav({firstName, lastName, documentId, userEmail, documentTitle}:{firstName:string; lastName:string; documentId:string; userEmail:string; documentTitle:string | null}) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isMounted, setIsMounted] = useState<boolean>(false)
   const elRef = useRef<HTMLElement>(null)
-  const {pageTitle} = useDocumentContext()
+  const {pageTitle, setPageTitle} = useDocumentContext()
+
+  useEffect(() => {
+   setIsMounted(true)
+   if(isMounted) {
+  }
+  setPageTitle(documentTitle!)
+  }, [isMounted]);
+
+  // useEffect(() => {
+  //   if(isMounted) {
+  //     setPageTitle('molly')
+  //   }
+  // },[isMounted])
+
+  console.log('chagmou', isMounted, pageTitle);
+  
 
 
   
@@ -52,7 +65,7 @@ export default function DocumentNav({firstName, lastName, documentId, userEmail}
           <NavbarMenuDisplay userEmail={userEmail} firstName={firstName} lastName={lastName} />
           <div className="flex items-center gap-8">
             <PanelLeft className="text-[#212121] hidden lg:block" />
-            {<span className="text-base font-bold">{pageTitle.trim().length > 1 ? pageTitle : "Untitled Document"}</span>}
+            {<span className="text-base font-bold">{pageTitle || 'untitled'}</span>}
           </div>
           <div className="flex items-center">
             <Dropdown backdrop="blur">
@@ -70,9 +83,7 @@ export default function DocumentNav({firstName, lastName, documentId, userEmail}
       </DropdownMenu>
             </Dropdown>
             <AddNoteDropdown />
-            <Button isIconOnly variant="ghost" className="ml-4 hidden sm:block" aria-label="more">
-              <MoreHorizontal />
-              </Button>
+            <ShareDropdown />
           </div>
         </div>
       </NavbarContent>
