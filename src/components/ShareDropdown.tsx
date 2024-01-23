@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import LoadingDisplay from "./LoadingDisplay";
 import QRCode from "react-qr-code";
-import { BaseUrl } from "@/lib/utils";
+import { BaseUrl, baseUrlClient } from "@/lib/utils";
 
 export default function ShareDropdown({docId}:{docId:string}) {
 
@@ -39,7 +39,7 @@ export default function ShareDropdown({docId}:{docId:string}) {
           <hr className="mt-4" />
           <Card className=" mt-4 shadow-lg rounded-xl bg-[rgb(250,250,250)]">
             <CardBody className="p-2 bg-white/75">
-            <QRCode value={`${BaseUrl}/document/shared/${docId}`}  href={window.location.href}   style={{ height: "auto", maxWidth: "100%", width: "100%" ,}}/>
+            <QRCode value={`${baseUrlClient}/document/shared/${docId}`}  href={window.location.href}   style={{ height: "auto", maxWidth: "100%", width: "100%" ,}}/>
             </CardBody>
           </Card>
         </DropdownItem>
