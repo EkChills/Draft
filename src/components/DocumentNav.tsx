@@ -20,7 +20,7 @@ import NavbarMenuDisplay from "./NavbarMenuDisplay";
 import ShareDropdown from "./ShareDropdown";
 // import {AcmeLogo} from "./AcmeLogo.jsx";
 
-export default function DocumentNav({firstName, lastName, documentId, userEmail, documentTitle}:{firstName:string; lastName:string; documentId:string; userEmail:string; documentTitle:string | null}) {
+export default function DocumentNav({firstName, lastName, documentId, userEmail, documentTitle, html}:{firstName:string; lastName:string; documentId:string; userEmail:string; documentTitle:string | null; html:string}) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isMounted, setIsMounted] = useState<boolean>(false)
   const elRef = useRef<HTMLElement>(null)
@@ -46,7 +46,7 @@ export default function DocumentNav({firstName, lastName, documentId, userEmail,
   
   async function handleExport () {
     const finalHtmlString = `  <h1 style="color: black; text-align: left; font-size:36px; font-weight:700; margin-bottom:10px; ">${pageTitle}</h1>`
-    const storedHtml:string = finalHtmlString + localStorage.getItem(`savedHtml-${documentId}`)! + `<p style="margin-top:5px;">  </p>` 
+    const storedHtml:string = finalHtmlString + (localStorage.getItem(`savedHtml-${documentId}`) ?? html) + `<p style="margin-top:5px;">  </p>` 
     generatePDF(storedHtml)
   }
 

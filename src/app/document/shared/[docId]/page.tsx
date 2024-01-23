@@ -19,7 +19,7 @@ const documentCreator = await db.query.user.findFirst({
 }) 
   return (
     <main>
-      <SharedDocument documentId={dbDocument.id} pageTitle={dbDocument.title!} creator={documentCreator!.firstName! + ' ' + documentCreator?.lastName} />
+      <SharedDocument html={dbDocument.html!} documentId={dbDocument.id} pageTitle={dbDocument.title!} creator={documentCreator!.firstName! + ' ' + documentCreator?.lastName} />
     </main>
   )
 }
