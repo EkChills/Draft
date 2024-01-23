@@ -38,7 +38,7 @@ export default function SignInForm() {
     }
   return (
     <form className="mx-auto mt-12 w-full sm:max-w-[26.375rem]" onSubmit={handleSubmit(handleLogin)}>
-      <Input type="email" {...register("email")} className="w-full" label="Email" errorMessage={errors.email?.message} isInvalid={errors.email ? true : false} />
+      <Input type="email"  {...register("email")} className="w-full" label="Email" errorMessage={errors.email?.message} isInvalid={errors.email ? true : false} />
       <Input
         type={isVisible ? 'text' : 'password'}
         className="my-4 w-full"

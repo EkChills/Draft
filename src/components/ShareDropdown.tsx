@@ -1,6 +1,8 @@
 import { api } from "@/trpc/react";
 import {
   Button,
+  Card,
+  CardBody,
   Dropdown,
   DropdownItem,
   DropdownMenu,
@@ -11,24 +13,10 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import LoadingDisplay from "./LoadingDisplay";
 import QRCode from "react-qr-code";
+import { BaseUrl } from "@/lib/utils";
 
-export default function ShareDropdown() {
-  const {
-    mutate: addDocument,
-    isSuccess,
-    data,
-    isLoading,
-  } = api.document.addNewDocument.useMutation();
-  const router = useRouter();
-  if (isLoading) {
-    return <LoadingDisplay loadingMessage="Creating document" />;
-  }
-  if (isSuccess) {
-    router.push(`/all-documents/document/${data.documentId}`);
-  }
+export default function ShareDropdown({docId}:{docId:string}) {
 
-  console.log(window.location.href);
-  
   return (
     <Dropdown placement="bottom-end">
       <DropdownTrigger>
@@ -43,15 +31,17 @@ export default function ShareDropdown() {
       </DropdownTrigger>
 
       <DropdownMenu className="min-w-[328px] py-4"  aria-label="Profile Actions" variant="flat">
-        <DropdownItem onClick={() => addDocument()}>
+        <DropdownItem>
           <div className="flex items-center justify-between">
             <h6 className="font-bold text-base">Share as QR code</h6>
             <span className="p-2 rounded-full bg-[#ACAEAD]"><X className="w-4 h-4 font-bold text-white" /></span>
           </div>
           <hr className="mt-4" />
-          <div className=" mt-4 p-4 shadow-lg rounded-xl bg-[rgb(250,250,250)]">
-            <QRCode value={window.location.href}  href={window.location.href}   style={{ height: "auto", maxWidth: "100%", width: "100%" ,}}/>
-          </div>
+          <Card className=" mt-4 shadow-lg rounded-xl bg-[rgb(250,250,250)]">
+            <CardBody className="p-2 bg-white/75">
+            <QRCode value={`${BaseUrl}/document/shared/${docId}`}  href={window.location.href}   style={{ height: "auto", maxWidth: "100%", width: "100%" ,}}/>
+            </CardBody>
+          </Card>
         </DropdownItem>
       </DropdownMenu>
     </Dropdown>
