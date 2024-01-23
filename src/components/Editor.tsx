@@ -53,10 +53,13 @@ export default function Editor({docId, awaitedSub, htmlString, documentTitle}:Ed
   
 
   async function handleSave () {
-    const parser = new DOMParser()
-    const doc = parser.parseFromString(model!, 'text/html');
-    const textContent = doc.body.textContent?.replaceAll('Powered by Froala Editor','');
-    mutate({documentId:docId, documentTitle:pageTitle, description:textContent!.substring(0, 200),html:model!})
+    if(model) {
+      const parser = new DOMParser()
+      const doc = parser.parseFromString(model, 'text/html');
+      const textContent = doc.body.textContent?.replaceAll('Powered by Froala Editor','');
+      localStorage.setItem(`savedHtml-${docId}`,model)
+      mutate({documentId:docId, documentTitle:pageTitle, description:textContent!.substring(0, 200),html:model})
+    }
     // mutate by damned
   }
 
