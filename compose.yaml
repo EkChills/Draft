@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    develop:
+      watch:
+        - path: ./package.json
+          action: rebuild
+        - path: ./next.config.js
+          action: rebuild
+        - path: ./package-lock.json
+          action: rebuild
+        - path: .
+          target: /app
+          action: sync
+    environment:
+      - DATABASE_URL=postgresql://postgres:Ekene13881609@db.lwktgvrweqncnlidinvy.supabase.co:5432/postgres
+      - NEXTAUTH_SECRET=briueriugiergiergoijeriog
+      - NEXTAUTH_URL=http://localhost:3000
+      - RESEND_API_KEY=re_FL3MM73Z_s43wRzrGj7KZxFj2ok3MtQR6
+      - PAYSTACK_SECRET_KEY=sk_test_04806e08a03d18600a82ac8d3892b8dbdf8d0395
+      - PAYSTACK_PUBLIC_KEY=pk_test_b7c128dad0331d56210d27a4210adaab8ab00cd6
+
+
+volumes:
+  drafts:

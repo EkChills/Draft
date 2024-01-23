@@ -1,6 +1,8 @@
 import { api } from "@/trpc/react";
 import {
   Button,
+  Card,
+  CardBody,
   Dropdown,
   DropdownItem,
   DropdownMenu,
@@ -49,9 +51,11 @@ export default function ShareDropdown() {
             <span className="p-2 rounded-full bg-[#ACAEAD]"><X className="w-4 h-4 font-bold text-white" /></span>
           </div>
           <hr className="mt-4" />
-          <div className=" mt-4 p-4 shadow-lg rounded-xl bg-[rgb(250,250,250)]">
+          <Card className=" mt-4 shadow-lg rounded-xl bg-[rgb(250,250,250)]">
+            <CardBody className="p-2 bg-white/75">
             <QRCode value={window.location.href}  href={window.location.href}   style={{ height: "auto", maxWidth: "100%", width: "100%" ,}}/>
-          </div>
+            </CardBody>
+          </Card>
         </DropdownItem>
       </DropdownMenu>
     </Dropdown>
