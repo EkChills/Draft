@@ -6,3 +6,4 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const BaseUrl = process.env.NODE_ENV === "production" ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000' 
+export const baseUrlClient = process.env.NODE_ENV === "production" ? "https://draft-sand.vercel.app" :  'http://localhost:3000' 
