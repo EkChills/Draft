@@ -75,6 +75,7 @@ export default async function Document({
         documentId={params.documentId}
         documentTitle={singleDocument.title}
         userEmail={session?.user.email ?? ""}
+        html={singleDocument.html!}
       />
 
       <MaxWidthWrapper className="overflow-x-scroll border-2 border-l px-4 pt-4 lg:px-24 lg:pt-12">
