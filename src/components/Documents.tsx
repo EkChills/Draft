@@ -19,8 +19,8 @@ export default async function Documents() {
   return (
     <div className='flex flex-col md:flex-row lg:flex-wrap gap-6 '>
         {allDocs.map((doc,idx) => {
-            return <DocumentCard title={doc.title!} key={doc.id} href={`all-documents/document/${doc.id}`} description={doc.description!} />
+            return <DocumentCard title={doc.title!} key={doc.id} html={doc.html ?? ''} href={`all-documents/document/${doc.id}`} description={doc.description!} />
         })}
-    </div>
+     </div>
   )
 }

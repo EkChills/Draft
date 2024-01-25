@@ -69,9 +69,9 @@ export default function DocumentNav({firstName, lastName, documentId, userEmail,
           </div>
           <div className="flex items-center">
             <Dropdown backdrop="blur">
-              <DropdownTrigger>
-                <Button variant="solid" className="bg-[#367EE7] text-white font-bold mr-2 ">
-                  <span className="hidden sm:block" ref={elRef}>Export as</span>
+              <DropdownTrigger >
+                <Button variant="solid" isIconOnly className="bg-[#367EE7] text-white font-bold mr-2 p-0 ">
+                  {/* <span className="hidden sm:block" ref={elRef}>Export as</span> */}
                   <Forward />
                 </Button>
               </DropdownTrigger>
