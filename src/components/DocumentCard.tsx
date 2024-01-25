@@ -1,4 +1,6 @@
-import React from "react";
+"use client"
+
+import React, { useEffect, useState } from "react";
 import { Card, CardBody } from "@nextui-org/react";
 import Link from "next/link";
 
@@ -6,16 +8,20 @@ type DocumentCardProps = {
   title: string;
   description?:string;
   href: string;
+  html:string;
 };
 
-const DocumentCard = ({title, description, href}:DocumentCardProps) => {
+const DocumentCard = ({title, description, href, html}:DocumentCardProps) => {
+  const [isMounted, setisMounted] = useState<boolean>(false)
+
+  useEffect(() => {
+    setisMounted(true)
+  },[])
   return (
-    <Card className="md:max-w-[400px] p-4 w-full md:min-w-[400px]">
+    <Card className="md:max-w-[400px] p-4 w-full md:min-w-[400px] max-h-[280px] ">
       <CardBody className="flex flex-col  gap-12">
         <h3 className="text-lg font-bold tracking-tight">{title}</h3>
-        <p className="text-sm text-gray-500">
-          {description}
-        </p>
+        { isMounted && <div className="overflow-y-scroll scrollbar-hide" dangerouslySetInnerHTML={{__html:html}} />}
         <div className="flex items-center justify-end ">
           <button className="focus-visible:ring-ring hover:bg-accent hover:text-accent-foreground inline-flex h-10 items-center justify-center rounded-md border border-blue-500 bg-background px-4 py-2 text-sm font-medium text-blue-500 ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
             <Link href={href}>
