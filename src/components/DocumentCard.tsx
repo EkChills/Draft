@@ -18,8 +18,8 @@ const DocumentCard = ({title, description, href, html}:DocumentCardProps) => {
     setisMounted(true)
   },[])
   return (
-    <Card className="md:max-w-[400px] p-4 w-full md:min-w-[400px] max-h-[280px] ">
-      <CardBody className="flex flex-col  gap-12">
+    <Card className="md:max-w-[400px]  w-full md:min-w-[400px] max-h-[280px] ">
+      <CardBody className="flex flex-col  gap-8">
         <h3 className="text-lg font-bold tracking-tight">{title}</h3>
         { isMounted && <div className="overflow-y-scroll scrollbar-hide" dangerouslySetInnerHTML={{__html:html}} />}
         <div className="flex items-center justify-end ">

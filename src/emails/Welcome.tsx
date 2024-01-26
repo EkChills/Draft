@@ -28,7 +28,7 @@ import {
               width="49"
               height="49"
               style={{objectFit:"cover", objectPosition:"center"}}
-              alt="Stripe"
+              alt="welcomeImage"
             />
             <Hr style={hr} />
             <Text style={paragraph}>
