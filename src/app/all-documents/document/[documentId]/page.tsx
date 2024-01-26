@@ -1,14 +1,11 @@
 import Editor from "@/components/Editor";
 import MaxWidthWrapper from "@/components/MaxwidthWrapper";
 import SingleDocument from "@/components/SingleDocumentInput";
-import MainNavbar from "@/components/MainNavbar";
 import { getServerAuthSession } from "@/server/auth";
 import { db } from "@/server/db";
 import { customerCode, document, user } from "@/server/db/schema";
-import { Navbar } from "@nextui-org/react";
 import { eq } from "drizzle-orm";
 
-import WelcomeCard from "@/components/WelcomeCard";
 import DocumentNav from "@/components/DocumentNav";
 import { env } from "@/env";
 

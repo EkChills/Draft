@@ -17,7 +17,7 @@ export default async function AllDocumentsPage() {
   return (
 
     <>
-            <MainNavbar firstName={dbUser[0]?.firstName ?? ''} lastName={dbUser[0]?.lastName ?? ''} />
+            <MainNavbar firstName={dbUser[0]?.firstName ?? ''} userEmail={session!.user.email!} lastName={dbUser[0]?.lastName ?? ''} />
 
         <MaxWidthWrapper className='border-l border-2 px-4 pt-4 overflow-x-scroll lg:px-24 lg:pt-12'>
         <Documents />

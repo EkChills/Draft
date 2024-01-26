@@ -23,7 +23,7 @@ import { useDocumentContext } from "@/lib/context/DocumentContext";
 import NavbarMenuDisplay from "./NavbarMenuDisplay";
 // import {AcmeLogo} from "./AcmeLogo.jsx";
 
-export default function MainNavbar({firstName, lastName}:{firstName:string; lastName:string;}) {
+export default function MainNavbar({firstName, lastName, userEmail}:{firstName:string; userEmail:string; lastName:string;}) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const {pageTitle} = useDocumentContext() 
   
@@ -33,7 +33,7 @@ export default function MainNavbar({firstName, lastName}:{firstName:string; last
         <NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} />
       </NavbarContent> */}
       <NavbarContent as="div" justify="start">
-        <BigNavDropdown firstName={firstName} lastName={lastName} />
+        <BigNavDropdown firstName={firstName} userEmail={userEmail} lastName={lastName} />
         <div className="flex w-full items-center justify-between px-4">
         <NavbarMenuToggle className="lg:hidden w-6 h-6" aria-label={isMenuOpen ? "Close menu" : "Open menu"} />
           <NavbarMenuDisplay firstName={firstName} lastName={lastName} />
