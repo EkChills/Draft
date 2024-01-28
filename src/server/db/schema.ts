@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm';
-import { serial, text, pgTableCreator,  varchar, boolean, timestamp, primaryKey, integer, uuid } from 'drizzle-orm/pg-core';
+import { serial, text, pgTableCreator,   boolean, timestamp, primaryKey, integer, uuid } from 'drizzle-orm/pg-core';
 import type { AdapterAccount } from '@auth/core/adapters'
 
 
@@ -94,7 +94,8 @@ export const document =  pgTable('document', {
   title:text('title'),
   description:text('description'),
   userId:text('userId'),
-  html:text('html')
+  html:text('html'),
+  isStarred:boolean('isStarred')
 })
 
 export const activateTokenRelation = relations(activateToken, ({one}) => ({
