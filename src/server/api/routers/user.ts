@@ -76,7 +76,6 @@ export const userRouter = createTRPCRouter({
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
       const resend = new Resend(env.RESEND_API_KEY) 
 
-    
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
       await resend.emails.send({
         from: "onboarding@resend.dev",
@@ -84,8 +83,6 @@ export const userRouter = createTRPCRouter({
         subject: `Activate Your draft Account: Confirm Your Email Now! `,
         react:WelcomeEmail({verificationLink:`${BaseUrl}/activate/${randToken}`}),
       });
-
-      
 
       return {
         success:true,

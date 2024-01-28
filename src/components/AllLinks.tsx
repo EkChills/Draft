@@ -16,7 +16,7 @@ const AllLinksArray:{icon:LucideIcon; text:string; path:Url | string; }[]= [
    {
     icon:Star,
     text:"Starred",
-    path:"/starred"
+    path:"/all-documents/starred"
    }
 ]
 
@@ -35,7 +35,7 @@ export default function AllLinks() {
                     <item.icon />
                     <span className='text-base font-semibold'>{item.text}</span>
                 </div>
-            })
+            }) 
         }
     </div>
   )

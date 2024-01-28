@@ -7,7 +7,7 @@ import { eq } from 'drizzle-orm'
 import { document } from '@/server/db/schema'
 import {cache} from 'react'
 
-export const revalidaste = 3600 // revalidate the data at most every hour
+export const revalidate = 3600 // revalidate the data at most every hour
 export default async function Documents() {
   const session = await getServerAuthSession()
     const allDocs = await db.query.document.findMany({
@@ -19,7 +19,7 @@ export default async function Documents() {
   return (
     <div className='flex flex-col md:flex-row lg:flex-wrap gap-6 '>
         {allDocs.map((doc,idx) => {
-            return <DocumentCard title={doc.title!} key={doc.id} html={doc.html ?? ''} href={`all-documents/document/${doc.id}`} description={doc.description!} />
+            return <DocumentCard title={doc.title!} id={doc.id} key={doc.id} html={doc.html ?? ''} isStarred={doc.isStarred!} href={`all-documents/document/${doc.id}`} description={doc.description!} />
         })}
      </div>
   )
