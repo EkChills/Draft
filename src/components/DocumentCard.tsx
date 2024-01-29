@@ -31,13 +31,13 @@ const DocumentCard = ({title, description,id, href, html,isStarred}:DocumentCard
   }
   return (
     <Card className="md:max-w-[400px]  w-full md:min-w-[400px] max-h-[280px] ">
-      <CardBody className="flex flex-col  gap-8">
+      <CardBody className="flex flex-col  gap-8 ">
         <div className="flex items-center justify-between w-full space-x-4">
         <h3 className="text-lg font-bold tracking-tight">{title}</h3>
         <button onClick={handleStartClick}>{!optimisticStarred ? <FaRegStar className="cursor-pointer" /> : <FaStar />}</button>
         </div>
         { isMounted && <div className="overflow-y-scroll scrollbar-hide" dangerouslySetInnerHTML={{__html:html}} />}
-        <div className="flex items-center justify-end ">
+        <div className="flex items-center justify-end mt-auto">
           <button className="focus-visible:ring-ring hover:bg-accent hover:text-accent-foreground inline-flex h-10 items-center justify-center rounded-md border border-blue-500 bg-background px-4 py-2 text-sm font-medium text-blue-500 ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
             <Link href={href}>
             View Full Document

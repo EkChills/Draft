@@ -1,5 +1,6 @@
 import MainNavbar from '@/components/MainNavbar'
 import MaxWidthWrapper from '@/components/MaxwidthWrapper'
+import StarredDocuments from '@/components/StarredDocuments';
 import { getServerAuthSession } from '@/server/auth';
 import { db } from '@/server/db';
 import { user } from '@/server/db/schema';
@@ -15,10 +16,11 @@ export default async function StarredPage() {
     <>
       <MainNavbar firstName={dbUser[0]?.firstName ?? ''} userEmail={session!.user.email!} lastName={dbUser[0]?.lastName ?? ''} />
     <MaxWidthWrapper className='border-l border-2 px-4 pt-4 overflow-x-scroll lg:px-24 lg:pt-12' >
-      <main className='min-h-screen w-full flex'>
-        <h6 className='text-black/75 text-lg mt-[192px] mx-auto'>Star documents you want to easily find later</h6>
-      </main>
+
+      <StarredDocuments />
     </MaxWidthWrapper>
     </>
   )
 }
+
+
