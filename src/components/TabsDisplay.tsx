@@ -2,12 +2,15 @@
 
 import React from "react";
 import {Tabs, Tab, Card, CardBody, CardHeader} from "@nextui-org/react";
-import { CalendarDays, Search, GanttChartSquare } from "lucide-react";
+import { CalendarDays, Search, GanttChartSquare, Trash2 } from "lucide-react";
 import AllLinks from "./AllLinks";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 
 
 export default function TabsDisplay() {
+  const pathName = usePathname()
   const tabs = [
     {
       id: "View",
@@ -44,6 +47,11 @@ export default function TabsDisplay() {
           </Tab>
         )}
       </Tabs>
+      <div className="bg-black/10s w-full h-[1px]" />
+      <div  className={cn('flex items-center cursor-pointer p-4 rounded-lg gap-4', pathName === '/recently-deleted' ? 'bg-[#F2F2F2]' : '')}>
+                    <Trash2 />
+                    <span className='text-base font-semibold'>{'Recently Deleted'}</span>
+                </div>
     </div>  
   );
 }

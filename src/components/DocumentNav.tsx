@@ -83,7 +83,7 @@ export default function DocumentNav({firstName, lastName, documentId, userEmail,
       </DropdownMenu>
             </Dropdown>
             <AddNoteDropdown />
-            <ShareDropdown key={documentId} docId={documentId} />
+            <ShareDropdown key={documentId} docTitle={documentTitle!} docId={documentId} />
           </div>
         </div>
       </NavbarContent>
