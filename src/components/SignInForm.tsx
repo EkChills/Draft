@@ -61,7 +61,7 @@ export default function SignInForm() {
           </button>
         }
       />
-      <Button type="submit" isLoading={isLoading} data-testid="sub" color="primary" size="md" fullWidth className="mt-2">Continue</Button>
+      <Button type="submit" isLoading={isLoading} data-testid="sub" color="primary" size="lg" fullWidth className="mt-2">Continue</Button>
     </form>
   );
 }

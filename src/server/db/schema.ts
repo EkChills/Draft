@@ -1,7 +1,8 @@
 import { relations } from 'drizzle-orm';
-import { serial, text, pgTableCreator,   boolean, timestamp, primaryKey, integer, uuid } from 'drizzle-orm/pg-core';
+import { serial, text, pgTableCreator,   boolean, timestamp, primaryKey, integer, uuid, pgEnum } from 'drizzle-orm/pg-core';
 import type { AdapterAccount } from '@auth/core/adapters'
 
+export const documentStatusEnum = pgEnum('document_status', ['DELETED', 'ACTIVE', 'PENDING']);
 
 export const pgTable = pgTableCreator((name) => `draft_${name}`);
 
@@ -95,7 +96,8 @@ export const document =  pgTable('document', {
   description:text('description'),
   userId:text('userId'),
   html:text('html'),
-  isStarred:boolean('isStarred')
+  isStarred:boolean('isStarred'),
+  documentStatus:documentStatusEnum('document_status')
 })
 
 export const activateTokenRelation = relations(activateToken, ({one}) => ({

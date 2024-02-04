@@ -6,7 +6,7 @@ import { eq } from "drizzle-orm";
 
 export const documentRouter = createTRPCRouter({
   addNewDocument:protectedProcedure.mutation(async({ctx}) => {
-    const createdDocument = await ctx.db.insert(document).values({title:'untitled', userId:ctx.session.userId}).returning({documentId:document.id})
+    const createdDocument = await ctx.db.insert(document).values({title:'untitled', userId:ctx.session.userId, documentStatus:"ACTIVE"}).returning({documentId:document.id})
     console.log('ran');
     console.log(createdDocument);
     
