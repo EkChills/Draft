@@ -17,6 +17,8 @@
   "dependencies": {
     "@auth/drizzle-adapter": "^0.3.6",
     "@hookform/resolvers": "^3.3.2",
+    "@liveblocks/client": "^1.9.7",
+    "@liveblocks/react": "^1.9.7",
     "@nextui-org/button": "^2.0.26",
     "@nextui-org/react": "^2.2.9",
     "@nextui-org/system": "^2.0.15",
@@ -46,6 +48,7 @@
     "lucide-react": "^0.294.0",
     "next": "^14.0.3",
     "next-auth": "^4.24.5",
+    "novel": "^0.1.22",
     "postgres": "^3.4.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",

@@ -10,9 +10,13 @@ import 'froala-editor/js/plugins.pkgd.min.js'
 import 'froala-editor/js/plugins/char_counter.min.js'
 import "froala-editor/js/plugins/font_size.min.js"
 import "froala-editor/js/plugins/save.min.js"
-import { useState } from 'react'
+import React, { useState } from 'react'
 import FroalaEditor from 'react-froala-wysiwyg'
 import PaymentModalAlert from './PaymentModalAlert'
+import { RoomProvider, useMyPresence } from 'liveblocks.config'
+import { ClientSideSuspense } from '@liveblocks/react'
+import EditorRoom from './EditorRoom'
+import { LiveObject } from '@liveblocks/client'
 type EditorProps = {
   docId:string;
   awaitedSub:{status:boolean; data:{
@@ -74,36 +78,15 @@ export default function Editor({docId, awaitedSub, htmlString, documentTitle}:Ed
   // },[data?.success])
 
   const saveDocWithProperties = saveDocAction.bind(null, {documentId:docId, documentTitle:pageTitle, documentDescription:textContent!.substring(0, 200),html:model!})
+  // Update cursor coordinates on pointer move
 
   return (
-    <>
-    <form id='editor' action={saveDocWithProperties} className='mt-12'>
-          <FroalaEditor  tag='textarea' model={model}
-          onModelChange={(e:string) => {
-              setModel(e)
-          }}  
-           config={{
-            saveInterval:2000,
-            placeholderText:"start writing your document...",
-            fontSizeSelection:true,
-            // documentReady: true,
-            heightMin: 300,
-            charCounterMax: awaitedSub.data.subscriptions.length > 0 ? awaitedSub?.data?.subscriptions[0]!.status === 'active' ? 1000 : 50 : 50,
-
-            events:{
-              "save.before": function(html:string) {
-                localStorage.setItem(`savedHtml-${docId}`,html)
-              },
-              'charCounter.exceeded': function () {
-                // Do something here.
-                // this is the editor instance.
-                setShowPaymentModal(true)
-              }
-            }
-          }}  />
-         <SaveDocButton />
-    </form>
-    <PaymentModalAlert isOpenPayment={showpaymentModal} setIsOpenPayment={setShowPaymentModal} />
-    </>
+    <RoomProvider initialPresence={{cursor:null, isTyping:null}}  initialStorage={{author: new LiveObject({ documentText: ""})}} id={docId}>
+      <ClientSideSuspense fallback={<div>Loading...</div>}>
+        {() => <EditorRoom docId={docId} htmlString={htmlString} awaitedSub={awaitedSub} pageTitle={pageTitle}  />
+        }
+      </ClientSideSuspense>
+    
+    </RoomProvider>
   )
 }

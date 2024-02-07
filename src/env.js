@@ -44,6 +44,7 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
+    NEXT_PUBLIC_LIVEBLOCKS_API_KEY:z.string()
     // NEXT_PUBLIC_CLIENTVAR: z.string(),
   },
 
@@ -58,7 +59,8 @@ export const env = createEnv({
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     RESEND_API_KEY:process.env.RESEND_API_KEY,
     PAYSTACK_PUBLIC_KEY:process.env.PAYSTACK_PUBLIC_KEY,
-    PAYSTACK_SECRET_KEY:process.env.PAYSTACK_SECRET_KEY
+    PAYSTACK_SECRET_KEY:process.env.PAYSTACK_SECRET_KEY,
+    NEXT_PUBLIC_LIVEBLOCKS_API_KEY:process.env.NEXT_PUBLIC_LIVEBLOCKS_API_KEY
     // DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
     // DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
   },
