@@ -17,7 +17,7 @@ export default function NavbarMenuDisplay({firstName, lastName, userEmail}:Navba
   }
   return (
     <NavbarMenu>
-        <TabsDisplay />
+        <TabsDisplay fullName={firstName + ' ' + lastName} />
       <NavbarMenuItem>
             <div className="flex items-center gap-4">
                 <Avatar

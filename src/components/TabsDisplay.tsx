@@ -6,10 +6,11 @@ import { CalendarDays, Search, GanttChartSquare, Trash2 } from "lucide-react";
 import AllLinks from "./AllLinks";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { SpaceDropdown } from "./SpaceDropdown";
 
 
 
-export default function TabsDisplay() {
+export default function TabsDisplay({fullName}:{fullName:string | null}) {
   const pathName = usePathname()
   const tabs = [
     {
@@ -47,7 +48,8 @@ export default function TabsDisplay() {
           </Tab>
         )}
       </Tabs>
-      <div className="bg-black/10s w-full h-[1px]" />
+      <div className="bg-black/10 w-full h-[1px]" />
+      <SpaceDropdown fullName={fullName} className="mt-4" />
       <div  className={cn('flex items-center cursor-pointer p-4 rounded-lg gap-4', pathName === '/recently-deleted' ? 'bg-[#F2F2F2]' : '')}>
                     <Trash2 />
                     <span className='text-base font-semibold'>{'Recently Deleted'}</span>
