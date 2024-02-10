@@ -4,8 +4,10 @@ import { ChevronDown, FilePlus2, Plus } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import LoadingDisplay from './LoadingDisplay'
+import { useDocumentContext } from '@/lib/context/DocumentContext'
 
 export default function AddNoteDropdown() {
+  const {spaceId} = useDocumentContext()
   const {mutate:addDocument, isSuccess, data,isLoading} = api.document.addNewDocument.useMutation()
   const router = useRouter()
   if(isLoading) {
@@ -34,7 +36,7 @@ export default function AddNoteDropdown() {
 
                 </DropdownTrigger>
                 <DropdownMenu className='' aria-label="Profile Actions" variant="flat">
-              <DropdownItem onClick={() => addDocument()}>
+              <DropdownItem onClick={() => addDocument({spaceId:spaceId ?? ''})}>
                 <span className='w-full bg-[#EDEEF5] p-6 rounded-lg flex items-center gap-4'>
                   <FilePlus2 className='text-[#636DAD]' />
                   <span className='flex flex-col gap-0'>
@@ -49,7 +51,7 @@ export default function AddNoteDropdown() {
             </div>
 
       <DropdownMenu className='' aria-label="Profile Actions" variant="flat">
-              <DropdownItem onClick={() => addDocument()}>
+              <DropdownItem onClick={() => addDocument({spaceId:spaceId ?? ''})}>
                 <span className='w-full bg-[#EDEEF5] p-6 rounded-lg flex items-center gap-4'>
                   <FilePlus2 className='text-[#636DAD]' />
                   <span className='flex flex-col gap-0'>

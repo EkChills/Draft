@@ -32,12 +32,12 @@ export function SpaceDropdown({className, fullName}:SpaceDropdownProps) {
       <DropdownMenuTrigger className={cn(className)} asChild>
         <div className="flex px-4 items-center gap-4 cursor-pointer">
         <Rocket className="text-black/50 text-md w-4 h-4" />
-        <p className="text-md font-semibold text-black/50">{fullName+ ' ' + 'space'}</p>
+        <p className="text-md font-semibold text-black/50">{fullName}&apos;s space</p>
         <ChevronDown className="text-black/50 text-md w-4 h-4" />
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>{fullName?.split(' ')[0]}&apos;s space</DropdownMenuLabel>
+        <DropdownMenuLabel>{fullName}&apos;s space</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>

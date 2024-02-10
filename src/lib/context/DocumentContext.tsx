@@ -7,7 +7,9 @@ type InitialStateType = {
   pageTitle:string;
   setPageTitle:Dispatch<SetStateAction<string>>;
   customerId?:string;
-  setCustomerId:Dispatch<SetStateAction<string>>
+  setCustomerId:Dispatch<SetStateAction<string>>;
+  setSpaceId:Dispatch<SetStateAction<string>>;
+  spaceId?:string;
 }
 
 
@@ -19,7 +21,9 @@ const initialState:InitialStateType = {
   customerId:'',
   setCustomerId:() => {
     return
-  }
+  },
+  setSpaceId:() => {return},
+  spaceId:''
 }
 
 export const DocumentContext = createContext(initialState)
@@ -27,12 +31,13 @@ export const DocumentContext = createContext(initialState)
 export const DocumentContextProvider = ({children}:React.PropsWithChildren) => {
   const [pageTitle, setPageTitle] = useState<string>('')
   const [customerId, setCustomerId] = useState<string>('')
+  const [spaceId, setSpaceId] = useState<string>('')
   
 
   
 
   return (
-    <DocumentContext.Provider value={{ pageTitle, setPageTitle, customerId, setCustomerId }}>
+    <DocumentContext.Provider value={{ pageTitle, setPageTitle, customerId, setCustomerId, spaceId,setSpaceId }}>
       {children}
     </DocumentContext.Provider>
   )

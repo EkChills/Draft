@@ -1,17 +1,19 @@
 "use client"
 
-import React from "react";
+import React, { useEffect } from "react";
 import {Tabs, Tab, Card, CardBody, CardHeader} from "@nextui-org/react";
 import { CalendarDays, Search, GanttChartSquare, Trash2 } from "lucide-react";
 import AllLinks from "./AllLinks";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { SpaceDropdown } from "./SpaceDropdown";
+import { useDocumentContext } from "@/lib/context/DocumentContext";
 
 
 
-export default function TabsDisplay({fullName}:{fullName:string | null}) {
+export default function TabsDisplay({fullName, spaceId}:{fullName:string | null; spaceId:string;}) {
   const pathName = usePathname()
+  const {spaceId:docspaceId, setSpaceId} = useDocumentContext()
   const tabs = [
     {
       id: "View",
@@ -32,6 +34,10 @@ export default function TabsDisplay({fullName}:{fullName:string | null}) {
       content:AllLinks
     }
   ];
+
+  useEffect(() => {
+    setSpaceId(spaceId)
+  },[])
 
   return (
     <div className="flex w-full flex-col pt-2">
