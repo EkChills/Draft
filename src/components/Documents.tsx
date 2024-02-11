@@ -4,7 +4,7 @@ import DocumentCard from './DocumentCard'
 import WelcomeCard from './WelcomeCard'
 import { getServerAuthSession } from '@/server/auth'
 import { and, eq } from 'drizzle-orm'
-import { document } from '@/server/db/schema'
+import { document, memberships, space } from '@/server/db/schema'
 import {cache} from 'react'
 
 export const revalidate = 3600 // revalidate the data at most every hour

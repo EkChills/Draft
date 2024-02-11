@@ -1,12 +1,12 @@
-import { document } from "@/server/db/schema";
+import { document, memberships, user } from "@/server/db/schema";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { eq } from "drizzle-orm";
 
 export const documentRouter = createTRPCRouter({
-  addNewDocument:protectedProcedure.mutation(async({ctx}) => {
-    const createdDocument = await ctx.db.insert(document).values({title:'untitled', userId:ctx.session.userId, documentStatus:"ACTIVE"}).returning({documentId:document.id})
+  addNewDocument:protectedProcedure.input(z.object({spaceId:z.string()})).mutation(async({ctx, input}) => {
+    const createdDocument = await ctx.db.insert(document).values({title:'untitled', userId:ctx.session.userId, documentStatus:"ACTIVE", spaceId:input.spaceId}).returning({documentId:document.id})
     console.log('ran');
     console.log(createdDocument);
     
@@ -45,5 +45,15 @@ export const documentRouter = createTRPCRouter({
       success:true,
       htmlText:doc?.html
     }
+  }),
+  getSpaceMembers:protectedProcedure.input(z.object({
+    spaceId: z.string()
+  })).query(async({ctx, input}) => {
+    console.log({input:input.spaceId});
+    
+    const members = await ctx.db.select().from(user).leftJoin(memberships, eq(memberships.userId, user.id)).where(eq(memberships.spaceId, input.spaceId))
+    console.log(members);
+    
+    return {members}
   })
 })

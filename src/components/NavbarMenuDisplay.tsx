@@ -8,8 +8,9 @@ interface NavbarMenuDisplayProps {
   firstName:string;
   lastName:string;
   userEmail?:string;
+  spaceName?:string;
 }
-export default function NavbarMenuDisplay({firstName, lastName, userEmail}:NavbarMenuDisplayProps) {
+export default function NavbarMenuDisplay({firstName, lastName, userEmail, spaceName}:NavbarMenuDisplayProps) {
   const router = useRouter()
   const signOutHandler = async() => {
     await signOut()
@@ -17,7 +18,7 @@ export default function NavbarMenuDisplay({firstName, lastName, userEmail}:Navba
   }
   return (
     <NavbarMenu>
-        <TabsDisplay fullName={firstName + ' ' + lastName} />
+        <TabsDisplay fullName={spaceName ?? ''} spaceId=""/>
       <NavbarMenuItem>
             <div className="flex items-center gap-4">
                 <Avatar
