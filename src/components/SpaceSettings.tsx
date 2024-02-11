@@ -58,7 +58,7 @@ export function SpaceSettings({openSpaceSettingsDialog,setOpenSpaceSettingsDialo
         </div>
         <Separator className="my-2" />
         <div className="flex flex-col gap-2" >
-          <h6 className="text-md font-semibold ">Members({data?.members.length + 1 ?? 1})</h6>
+          <h6 className="text-md font-semibold ">Members({data?.members.length ? data.members.length + 1 : 1})</h6>
           <MemberNameDisplay fullName={session.data?.user.firstName + ' ' + session.data?.user.lastName} email={session.data?.user.email ?? ''} isOwner />
           {data?.members.map((member) => {
             return <MemberNameDisplay fullName={member.user.firstName + ' ' + member.user.lastName} email={member.user.email} />
