@@ -18,7 +18,7 @@ export default function NavbarMenuDisplay({firstName, lastName, userEmail, space
   }
   return (
     <NavbarMenu>
-        <TabsDisplay fullName={spaceName ?? ''} />
+        <TabsDisplay fullName={spaceName ?? ''} spaceId=""/>
       <NavbarMenuItem>
             <div className="flex items-center gap-4">
                 <Avatar

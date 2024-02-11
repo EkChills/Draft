@@ -3,8 +3,9 @@ import React from 'react'
 interface MemberNameDisplayProps {
     fullName:string;
     email:string;
+    isOwner?:boolean;
 }
-export default function MemberNameDisplay({email, fullName}:MemberNameDisplayProps) {
+export default function MemberNameDisplay({email, fullName, isOwner}:MemberNameDisplayProps) {
   return (
     <div className='w-full flex items-center justify-between'>
         <div className='flex items-center space-x-2'>
@@ -14,6 +15,7 @@ export default function MemberNameDisplay({email, fullName}:MemberNameDisplayPro
                 <p className='text-base text-black/60'>{email}</p>
             </div>
         </div>
+        {isOwner && <div className='p-2 border-1 text-center text-md text-black/40'>Owner</div> }
     </div>
   )
 }
