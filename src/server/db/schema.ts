@@ -32,7 +32,7 @@ export const user = pgTable("user", {
  })
 
  export const space = pgTable('space', {
-  id:uuid('id').notNull().defaultRandom(),
+  id:text('id').primaryKey(),
   hostId:text("hostId")
   .notNull()
   .references(() => user.id, { onDelete: "cascade" }),

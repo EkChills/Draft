@@ -50,7 +50,7 @@ export default function MoreInfoForm({session}:{session:Session}) {
 
     useEffect(() => {
       if(isSuccess) {
-        router.push('/all-documents')
+        router.push('/space-info')
       }
     }, [isSuccess])
   return (
